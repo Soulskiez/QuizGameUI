@@ -38,7 +38,7 @@ function Question(props) {
 	return (
 		<Accordion className={classes.accordion}>
 			<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-				<Typography>Question 1</Typography>
+				<Typography>{`Question ${questionNum}`}</Typography>
 			</AccordionSummary>
 			<AccordionDetails>
 				<div className={classes.root}>
