@@ -4,10 +4,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { Link } from 'react-router-dom';
 
+import AddCircle from '@material-ui/icons/AddCircle';
+
 import Question from './Question';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { Add } from '@material-ui/icons';
 
 const useStyles = makeStyles({
 	root: {
@@ -30,27 +33,38 @@ const useStyles = makeStyles({
 
 function CreateQuiz() {
 	const classes = useStyles();
-	const [ createQuestions, setCreateQuestions ] = useState([]);
-	const questions = [
+	const [ createQuestions, setCreateQuestions ] = useState([
 		{
 			prompt: 'What is the average par for golf?',
+			isBoolean: false,
 			answers: [ '69', '72', '80', '50' ],
 			correctIndex: 1,
-			quiz_id: 'sdfjf-sdf-sdf-ffsdfffsfs-ff' //something like tis
+			quiz_id: 'sdfjf-sdf-sdf-ffsdfffsfs-ff'
 		},
 		{
 			prompt: 'How tall am I',
+			isBoolean: false,
 			answers: [ '5ft', '6ft', '510', '64' ],
 			correctIndex: 1,
-			quiz_id: 'sdfjf-sdf-sdf-ffsdfffsfs-ff' //something like tis
+			quiz_id: 'sdfjf-sdf-sdf-ffsdfffsfs-ff'
 		}
-	];
-	// const getQuestions = (questions) => {
-	// 	return createQuestions.map((question, index) => {
-	// 		  question;
-	// 	});
-	// 	// return <Question prompt />;
-	// };
+	]);
+	const getQuestions = () => {
+		return createQuestions.map((question, index) => <Question question={question} questionNum={index} />);
+		// return <Question prompt />;
+	};
+	const handleAddbuttonClicked = () => {
+		//add blank question setTheArray([...theArray, newElement]);
+		const blankQuestion = {
+			prompt: '',
+			isBoolean: false,
+			answers: [ '', '', '', '' ],
+			correctIndex: 0,
+			quiz_id: 'sdfjf-sdf-sdf-ffsdfffsfs-ff'
+		};
+		setCreateQuestions([ ...createQuestions, blankQuestion ]);
+		console.log('hey');
+	};
 
 	return (
 		<div className={classes.root}>
@@ -58,8 +72,10 @@ function CreateQuiz() {
 			<div className={classes.body}>
 				<TextField className={classes.inputFields} label="Quiz Name" variant="outlined" />
 				<TextField label="Quiz Description" variant="outlined" />
-				<Question questionNum={1} />
-				<Question questionNum={2} />
+				{getQuestions()}
+				<Button className={classes.button} onClick={handleAddbuttonClicked}>
+					<AddCircle />
+				</Button>
 				<Button className={classes.button} variant="contained">
 					Save
 				</Button>

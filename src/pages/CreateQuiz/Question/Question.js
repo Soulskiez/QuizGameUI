@@ -30,31 +30,32 @@ const useStyles = makeStyles((theme) => ({
 
 function Question(props) {
 	const classes = useStyles();
-	const { questionNum } = props;
-	const [ checked, setChecked ] = useState(false);
-	const handleChange = (e) => {
-		setChecked(e.target.checked);
-	};
+	const { question, questionNum } = props;
+
 	return (
 		<Accordion className={classes.accordion}>
 			<AccordionSummary expandIcon={<ExpandMoreIcon />}>
-				<Typography>{`Question ${questionNum}`}</Typography>
+				{question.prompt.length > 0 ? (
+					<Typography>{question.prompt}</Typography>
+				) : (
+					<Typography>{`Question ${questionNum + 1}`}</Typography>
+				)}
 			</AccordionSummary>
 			<AccordionDetails>
 				<div className={classes.root}>
-					<TextField label={`Question Prompt ${questionNum}`} />
+					<TextField label="Prompt" value={question.prompt} />
 					<div className={classes.isBooleanQuestionDiv}>
 						<Typography>This is a True or False Question</Typography>
-						<Checkbox checked={checked} onChange={handleChange} />
+						<Checkbox checked={question.isBoolean} />
 					</div>
 					<div>
 						<div>
-							<TextField className={classes.question} label="Answer 1" />
-							<TextField className={classes.question} label="Answer 2" />
+							<TextField className={classes.question} label="Answer 1" value={question.answers[0]} />
+							<TextField className={classes.question} label="Answer 2" value={question.answers[1]} />
 						</div>
 						<div>
-							<TextField className={classes.question} label="Answer 3" />
-							<TextField className={classes.question} label="Answer 4" />
+							<TextField className={classes.question} label="Answer 3" value={question.answers[2]} />
+							<TextField className={classes.question} label="Answer 4" value={question.answers[3]} />
 						</div>
 					</div>
 				</div>
